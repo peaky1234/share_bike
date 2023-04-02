@@ -13,37 +13,6 @@ var slider1 = layui.slider;
 var jsonData=[];
 
 var myTable={}
-layui.use(['form'], function () {
-    var form = layui.form;
-    form.on('switch(switchGoodsID)',function (data) {
-        if (document.querySelector(".lock-btn").checked === true) {
-
-        stompClient.send("/app/control", {}, "Hwcel"+status+"02onT");
-      } else {
-
-        stompClient.send("/app/control", {}, "Hwcel"+status+"03offT");
-    }
-    })
-
-    form.on('radio(switchGoodsID1)',function (data) {
-         setTimeout("clock()",5000);
-        if(data.value==="左转")
-
-            stompClient.send("/app/control", {}, "Hwcle"+status+"010T");
-        if(data.value==="右转")
-
-            stompClient.send("/app/control", {}, "Hwcle"+status+"011T");
-    })
-})
-
-function clock()
-{
-    xinfeiradio[2].checked=true;
-    layui.use('form', function () {
-        var form = layui.form;
-        form.render();
-    });
-}
 
 $(function($) {
     var socket = new SockJS('/gs-guide-websocket');

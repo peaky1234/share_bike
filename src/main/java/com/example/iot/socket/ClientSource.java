@@ -71,7 +71,7 @@ public class ClientSource implements CommandLineRunner {
 
     public void run(String[] args) throws Exception {
         try {
-            ServerSocket ss = new ServerSocket(333);//服务端的套接字
+            ServerSocket ss = new ServerSocket(30000);//服务端的套接字
 
             System.out.println("服务器启动成功");
             while (true) {
