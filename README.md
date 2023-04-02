@@ -4,14 +4,7 @@
 基于物联网的共享单车
 
 #### 软件架构
-软件架构说明
-
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
+springboot+mybatisplus+layui，jdk是1.8版本的  mysql版本是8.0.28
 
 #### 使用说明
 
