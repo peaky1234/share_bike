@@ -1,0 +1,437 @@
+html{
+    width: 100%;
+}
+body{
+    background-color: #212121;
+}
+
+/*首页图*/
+.index-img{
+    z-index: 2;
+    width: 220px;
+}
+/*面板阴影样式1*/
+.card1 {
+    width: 100%;
+    height: 20rem;
+    background: #212121;
+    position: relative;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 5px 5px 15px rgb(25, 25, 25),
+    -5px -5px 15px rgb(60, 60, 60);
+}
+
+.card1 h2 {
+    z-index: 1;
+    color: white;
+    font-size: 2em;
+}
+
+.card1::before {
+    content: '';
+    position: absolute;
+    width: 200px;
+    background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
+    height: 160%;
+    animation: rotBGimg 3s linear infinite;
+    transition: all 0.2s linear;
+}
+
+@keyframes rotBGimg {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.card1::after {
+    content: '';
+    position: absolute;
+    background: #212121;
+;
+    inset: 5px;
+    border-radius: 15px;
+}
+
+/*面板阴影样式2*/
+.card2 {
+    width: 100%;
+    height: 20rem;
+    background: #212121;
+    position: relative;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 5px 5px 15px rgb(25, 25, 25),
+    -5px -5px 15px rgb(60, 60, 60);
+}
+
+.card2 h2 {
+    z-index: 1;
+    color: white;
+    font-size: 2em;
+}
+
+.card2::before {
+    content: '';
+    position: absolute;
+    width: 200px;
+    background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
+    height: 160%;
+    animation: rotBGimg 3s linear infinite;
+    transition: all 0.2s linear;
+}
+
+@keyframes rotBGimg {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.card2::after {
+    content: '';
+    position: absolute;
+    background: #212121;
+;
+    inset: 5px;
+    border-radius: 15px;
+}
+
+/*面板阴影样式3*/
+.card3 {
+    width: 100%;
+    height: 20rem;
+    background: #212121;
+    position: relative;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 5px 5px 15px rgb(25, 25, 25),
+    -5px -5px 15px rgb(60, 60, 60);
+}
+
+.card3 h2 {
+    z-index: 1;
+    color: white;
+    font-size: 2em;
+}
+
+.card3::before {
+    content: '';
+    position: absolute;
+    width: 200px;
+    background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
+    height: 160%;
+    animation: rotBGimg 3s linear infinite;
+    transition: all 0.2s linear;
+}
+
+@keyframes rotBGimg {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.card3::after {
+    content: '';
+    position: absolute;
+    background: #212121;
+;
+    inset: 5px;
+    border-radius: 15px;
+}
+
+/*数据域样式*/
+.card-center {
+    width: 100%;
+    height: 20rem;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 5px 5px 15px rgb(25, 25, 25),
+    -5px -5px 15px rgb(60, 60, 60);
+}
+.data {
+    margin: 20px;
+    height: 81px;
+    animation: animated-border 1.5s infinite;
+    font-family: Arial;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.3);
+    border: 2px solid;
+    border-radius: 14px;
+    padding: 15px;
+}
+.data h2{
+    color: #00f8ff;
+    font-size: 30px;
+}
+.data h3{
+    font-size: 20px;
+    color: #ffd500;
+}
+
+/*图标样式*/
+.icon{
+    position: absolute;
+    top: 64px;
+    left: 178px;
+}
+/*控制界面*/
+.form-control{
+    z-index: 3;
+}
+.card-under{
+    height: 321px;
+    padding: 13px;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 5px 5px 15px rgb(25, 25, 25),
+    -5px -5px 15px rgb(60, 60, 60);
+}
+.control-card{
+    height: 321px;
+}
+.control-card h3{
+    font-size: 15px;
+    text-align: center;
+    margin: 2px;
+}
+/*阈值输入样式*/
+.input1 {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+    font-weight: 500;
+    font-size: .8vw;
+    color: #fff;
+    background-color: rgb(28,28,30);
+    box-shadow: 0 0 .4vw rgba(0,0,0,0.5), 0 0 0 .15vw transparent;
+    border-radius: 0.4vw;
+    border: none;
+    outline: none;
+    padding: 0.4vw;
+    width: 280px;
+    max-width: 230px;
+    transition: .4s;
+}
+
+.input1:hover {
+    box-shadow: 0 0 0 .15vw rgba(135, 207, 235, 0.186);
+}
+
+.input1:focus {
+    box-shadow: 0 0 0 .15vw skyblue;
+}
+
+/*提交按钮样式*/
+.button1 {
+    position: relative;
+    padding: 10px 20px;
+    border-radius: 7px;
+    border: 1px solid rgb(61, 106, 255);
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 2px;
+    background: transparent;
+    color: #fff;
+    overflow: hidden;
+    box-shadow: 0 0 0 0 transparent;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+}
+
+.button1:hover {
+    background: rgb(61, 106, 255);
+    box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815);
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+
+.button1:hover::before {
+    -webkit-animation: sh03 0.5s 0s linear;
+    -moz-animation: sh03 0.5s 0s linear;
+    animation: sh03 0.5s 0s linear;
+}
+
+.button1::before {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 86%;
+    position: absolute;
+    top: 7%;
+    left: 0%;
+    opacity: 0;
+    background: #fff;
+    box-shadow: 0 0 50px 30px #fff;
+    -webkit-transform: skewX(-20deg);
+    -moz-transform: skewX(-20deg);
+    -ms-transform: skewX(-20deg);
+    -o-transform: skewX(-20deg);
+    transform: skewX(-20deg);
+}
+
+@keyframes sh03 {
+    from {
+        opacity: 0;
+        left: 0%;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        left: 100%;
+    }
+}
+
+.button1:active {
+    box-shadow: 0 0 0 0 transparent;
+    -webkit-transition: box-shadow 0.2s ease-in;
+    -moz-transition: box-shadow 0.2s ease-in;
+    transition: box-shadow 0.2s ease-in;
+}
+
+/*控制图标*/
+.control-card img{
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+}
+
+.control-button{
+    margin: 20px;
+    height: 12px;
+    width: 71px;
+    animation: animated-border 1.5s infinite;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.3);
+}
+.control-button h3{
+    color: white;
+    text-align: center;
+    height: 12px;
+    line-height: 12px;
+    font-weight: bolder;
+}
+/*折线图样式*/
+.chart-box{
+    height: 256px;
+    width: 780px;
+    margin: 10px;
+}
+.card-tmp{
+    display: block;
+    width: 88.5vmin;
+    height: 33vmin;
+}
+.card-vcc{
+    display: none;
+    width: 88.5vmin;
+    height: 33vmin;
+}
+.card-light{
+    display: none;
+    width: 88.5vmin;
+    height: 33vmin;
+}
+.chart{
+    height: 18rem;
+    margin: 0.5rem;
+}
+
+/*滑块样式*/
+.selected{
+    margin-right: 16px;
+    background-color: #f53b57;
+    width: 10vw;
+    line-height: 40px;
+    text-align: center;
+    color: white;
+    border-radius: 4px;
+    position: relative;
+    padding-left: .6vw;
+    padding-right: .6vw;
+}
+
+/*服务器状态表格*/
+.statue-box1{
+    margin: 20px;
+    height: 81px;
+    width: 290px;
+    animation: animated-border 1.5s infinite;
+    font-family: 微软雅黑, serif;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.3);
+    border: 2px solid;
+    border-radius: 14px;
+    padding: 15px;
+}
+.statue-box2{
+    margin: 20px;
+    height: 81px;
+    width: 290px;
+    animation: animated-border 1.5s infinite;
+    font-family: 微软雅黑, serif;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.3);
+    border: 2px solid;
+    border-radius: 14px;
+    padding: 15px;
+}
+.statue-box1 h1{
+    line-height: 50px;
+    color: #00ff77;
+}
+.statue-box1 h3{
+    color: #ffdd02;
+}
+.statue-box2 h1{
+    line-height: 50px;
+    color: #00ff77;
+}
+.statue-box2 h3{
+    color: #ffdd02;
+}
+.statue-img1{
+    width: 80px;
+    position: absolute;
+    top: 53px;
+    left: 241px;
+}
+.statue-img2{
+    width: 80px;
+    position: absolute;
+    top: 185px;
+    left: 241px;
+}

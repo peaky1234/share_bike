@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../layui/css/layui.css">
+<!--    <script src="../js/nav.js"></script>-->
+    <script src="../layui/layui.js"></script>
+    <script src="../vue/vue.js"></script>
+    <script src="../js/jquery-3.1.0.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="../js/echarts.js"></script>
+    <script src="../js/tmp_chart.js"></script>
+    <script src="../js/VCC_chart.js"></script>
+    <script src="../js/light_chart.js"></script>
+    <script src="../js/clickshow.js"></script>
+</head>
+<body>
+
+<div style="padding: 26px 15px" id="page">
+    <div class="layui-row layui-col-space30">
+        <div class="layui-col-md3">
+            <div class="card1">
+                <img src="../images/男性骑车.svg" class="index-img">
+            </div>
+        </div>
+        <!--        数据展示界面-->
+        <div class="layui-col-md6">
+            <div class="card-center">
+                <div class="layui-row layui-col-space4">
+                    <div class="layui-col-md6">
+                        <div class="data data1">
+                            <h3>实时温度：</h3>
+                            <h2>{{temp}}</h2>
+                            <h6>℃</h6>
+                            <i class="layui-icon icon" style="font-size: 55px; color: #00fffb;">&#xe665;</i>
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="data data2">
+                            <h3>位置信息</h3>
+                            <h2>{{position}}</h2>
+                            <h6>℃</h6>
+                            <i class="layui-icon icon" style="font-size: 55px; color: #00fffb;">&#xe665;</i>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-row layui-col-space4">
+                    <div class="layui-col-md6">
+                        <div class="data data4">
+                            <h3>实时光照：</h3>
+                            <h2>{{ill}}</h2>
+                            <h6>LUX</h6>
+                            <i class="layui-icon icon" style="font-size: 55px; color: #00fffb;">&#xe748;</i>
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="data data5">
+                            <h3>实时电压：</h3>
+                            <h2>{{voltage}}</h2>
+                            <h6>V</h6>
+                            <i class="layui-icon icon" style="font-size: 55px; color: #00fffb;">&#xe62c;</i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="card3">
+                <div class="server-box" style="z-index: 2;color: white">
+                    <div class="statue-box1">
+                        <h3>自行车编号</h3>
+                        <h1>{{bicycle}}</h1>
+                        <img src="../images/编号.svg" alt="" class="statue-img1">
+                    </div>
+                    <div class="statue-box2">
+                        <h3>电池编号</h3>
+                        <h1>{{battery}}</h1>
+                        <img src="../images/编号.svg" alt="" class="statue-img2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="padding: 0px 15px;">
+    <div class="layui-row layui-col-space30">
+        <!--        控制界面 -->
+        <div class="layui-col-md6">
+            <div class="card-under control-card">
+                <div class="layui-row layui-col-space30" style="margin-top: 10px">
+                    <div class="layui-col-md4" style="margin-left: 20px;margin-top: 5px">
+                        <input type="text" name="text" class="input1" id="threshold" placeholder="请输入阈值...">
+                    </div>
+                    <div class="layui-col-md3">
+                        <button class="button1">设置阈值</button>
+                    </div>
+                </div>
+                <div class="layui-row layui-col-space10" style="margin-bottom: 30px">
+                    <div class="layui-col-md4">
+                        <img src="../images/锁%20(1).svg" alt="" class="img-lock1">
+                        <img src="../images/解锁%20(3).svg" alt="" class="img-lock2" style="display: none;width: 40px;height: 40px;margin-left: 20px;">
+                        <div class="control-button">
+                            <h3>车辆锁定</h3>
+                        </div>
+                    </div>
+                    <div class="layui-col-md4">
+                        <img src="../images/公告%20(2).svg" alt="" class="img-lock3">
+                        <img src="../images/公告%20(3).svg" alt="" class="img-lock4" style="display: none;width: 40px;height: 40px;margin-left: 20px;">
+                        <div class="control-button">
+                            <h3>车辆光照</h3>
+                        </div>
+                    </div>
+                    <div class="layui-col-md4">
+                        <img src="../images/喇叭.svg" alt="" class="img-lock5">
+                        <img src="../images/喇叭%20(1).svg" alt="" class="img-lock6" style="display: none;width: 40px;height: 40px;margin-left: 20px;">
+                        <div class="control-button">
+                            <h3>车辆喇叭</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-row layui-col-space30">
+                    <div class="layui-col-md4">
+                        <img src="../images/左转弯灯灰色.svg" alt="" class="img-lock7">
+                        <img src="../images/左转弯灯黄色.svg" alt="" class="img-lock8" style="display: none;width: 40px;height: 40px;margin-left: 20px;">
+                        <div class="control-button">
+                            <h3>左转向灯</h3>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md4">
+                        <img src="../images/右转弯灯灰色.svg" alt="" class="img-lock9">
+                        <img src="../images/右转弯灯黄色.svg" alt="" class="img-lock10" style="display: none;width: 40px;height: 40px;margin-left: 20px;">
+                        <div class="control-button">
+                            <h3>右转向灯</h3>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md4">
+                        <span class="selected">{{speed}}</span>
+                        <input type="range" class="speed_control" min="0" max="100" value="0">
+                        <div class="control-button">
+                            <h3>车辆转速</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="card-under">
+                <span class="layui-breadcrumb" style="margin: 20px 20px;padding: 20px 20px">
+                    <div class="nav-chart" style="width: 350px">
+                        <a class="nav-chart1" href="#">温度变化图</a>
+                        <a class="nav-chart2" href="#">电压变化图</a>
+                        <a class="nav-chart3" href="#">光照变化图</a>
+                    </div>
+                </span>
+                <div class="card-tmp chart-box">
+                    <div class="tmp_chart chart" style="height: 300px;width: 700px"></div>
+                    <script>tmp_echarts();</script>
+                </div>
+                <div class="card-vcc chart-box">
+                    <div class="VCC_chart chart" style="height: 248px;width: 700px"></div>
+                    <script>VCC_echarts();</script>
+                </div>
+                <div class="card-light chart-box">
+                    <div class="light_chart chart" style="height: 248px;width: 700px"></div>
+                    <script>light_echarts();</script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<table id="demo" lay-filter="test"></table>
+</body>
+<script src="../js/mysocket.js"></script>
+<script src="../js/range.js"></script>
+<script src="../js/page.js"></script>  <!--要等上面的html渲染完再导入js文件-->
+
+</html>

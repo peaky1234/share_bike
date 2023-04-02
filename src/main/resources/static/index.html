@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>共享单车管理系统</title>
+
+    <style>
+        html{
+            overflow-y :hidden;
+        }
+    </style>
+
+    <script src="vue/vue.js"></script>
+</head>
+<body >
+<!--上方标题栏-->
+<div class="parentTop" style="background-color: #212121;">
+    <a href="#" class="appName">共享单车管理系统</a>
+    <div class="loginNameDiv">
+        <img class="loginIcon" src="images/img.png" style="border-radius: 5px;">
+        <div class="loginUserInfo">
+            <span id="userName" >{{username}}</span><br>
+            <span>管理员</span>
+        </div>
+    </div>
+</div>
+
+<!--左侧菜单-->
+<div class="leftMenu" style="background-color: #212121">
+    <ul class="layui-nav layui-nav-tree"
+        lay-filter="test" style="background-color: #212121">
+    </ul>
+</div>
+<!--主要内容区-->
+<div class="parentMain" style="padding: 0">
+    <iframe id="iframeParent"></iframe>
+</div>
+
+<!--设置弹框-->
+<div class="dialogMenu">
+    <div id="parentExit" class="dialogMenu-item">退出</div>
+</div>
+</body>
+</html>
+<!--修改密码弹框-->
+
+
+<script src="js/jquery-3.1.0.min.js"></script>
+<script src="layui/layui.js"></script>
+<script src="js/common.js"></script>
+<script src="js/page.js"></script>
+<script>
+
+
+    var user=new Vue({
+        el:'#userName',
+        data:{
+            username:localStorage.getItem('username')
+        }
+    })
+
+
+    layuiModules=['layer', 'form','element'];
+
+    function mounted() {
+        //菜单列表数据
+        window.menuArray = [
+            {
+                name: "首页",
+                id: 0,
+                pid: -1,
+                url: '#/index.html'
+            }, {
+                name: "传感器数据管理",
+                id: 1,
+                pid: -1,
+                url: '#/sensor.html'
+            }, {
+                name: "单车电池信息管理",
+                id: 2,
+                pid: -1,
+                url: '#/table.html'
+            }, {
+                name: "用车记录管理",
+                id: 3,
+                pid: -1,
+                url: '#/record.html'
+            }, {
+                name: "人员数据管理",
+                id: 3,
+                pid: -1,
+                url: '#/employee.html'
+            },
+        ];
+        formatMenus();
+        //初始化类vue路由
+        initRouter();
+        //显示设置弹框
+        $('.loginNameDiv').click(function () {
+            if ($('.dialogMenu').css('display') === 'block') {
+                $('.dialogMenu').css('display', 'none');
+            } else {
+                $('.dialogMenu').css('display', 'block');
+            }
+
+        });
+        //退出登录
+        $('#parentExit').click(function () {
+            $('.dialogMenu').css('display', 'none');
+            layer.open({
+                type: 1,
+                content: `<div style="padding: 20px;">是否退出</div>`,
+                btn: ["确定退出", "暂不退出"],
+                yes: function (index, layero) {
+                    $.ajax({
+                        url: '/admin/loginout',
+                        type: 'GET',
+                        contentType: 'application/json',
+                        success: function (response) {
+                            if (response.code === 0) {
+                                location.href = "login.html";
+                            }
+                            else
+                                alert(response.msg);
+                        }
+                    });
+                },
+                btn2: function (index, layero) {
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+        });
+        //显示修改密码弹框
+        $('#parentChangePassword').click(function () {
+            $('.dialogMenu').css('display', 'none');
+            layer.open({
+                type: 1,
+                title: '修改密码',
+                content: $('#dialogChangePassword').html(), //这里content是一个普通的String
+                btn: ['确定', '取消'],
+                success: function (index, layero) {
+                    form.render();
+                    $('#dialogChangePasswordForm').submit(function (e) {
+                        console.log(formArray2Data($(this).serializeArray()));
+                        return false;
+                    });
+                },
+                yes: function (index, layero) {
+                    $('#dialogChangePasswordForm').submit();
+                },
+                btn2: function (index, layero) {
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+        });
+    }
+
+
+
+    /**
+     *格式化菜单数据
+     */
+    function formatMenus() {
+        findChildMenus(-1);
+        window.element.render('nav');
+    }
+
+    /**
+     * 根据id查找下级菜单
+     * @param id
+     */
+    function findChildMenus(id) {
+        if (id == -1) {
+            menuArray.forEach(function (item) {
+                if (item.pid == id) {
+                    $('.leftMenu ul')
+                        .append('<li menu-id="' + item.id + '" class="layui-nav-item"><a href="' + item.url + '">' + item.name + '</a></li>')
+                    findChildMenus(item.id);
+                }
+            });
+
+        } else {
+            menuArray.forEach(function (item) {
+                if (item.pid == id) {
+                    $('[menu-id="' + item.pid + '"]>a').removeAttr('href');
+                    if (!$('[menu-id="' + item.pid + '"]').children('dl')[0]) {
+                        $('[menu-id="' + item.pid + '"]').append('<dl class="layui-nav-child"></dl>')
+                    }
+                    $('[menu-id="' + item.pid + '"] dl')
+                        .append('<dd menu-id="' + item.id + '"><a href="' + item.url + '">' + item.name + '</a></dd>');
+                    findChildMenus(item.id);
+                }
+            });
+        }
+
+    }
+
+
+
+
+
+</script>

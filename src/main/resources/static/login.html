@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>管理员登录</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="stylesheet" href="css/amazeui.min.css" />
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/jquery-3.1.0.min.js"></script>
+  <script src="layui/layui.js"></script>
+  <script src="vue/vue.js"></script>
+</head>
+
+<body data-type="login">
+<script src="js/theme.js"></script>
+<div class="am-g tpl-g" >
+  <div class="tpl-login">
+    <div class="tpl-login-content">
+      <div>
+        <img src="images/index-logo.png" style="width:30px; height: 30px; float: left; margin-top:14px; margin-left: 15px; margin-right: 10px;">
+        <p style="font-size:24px; color: #cfcfcf; line-height: 2.4em;">WOFI单车后台管理</p>
+      </div>
+      <form autocomplete="off" id="#formData" class="am-form tpl-form-line-form" action=""  method="post" >
+        <div class="am-form-group">
+          <input type="text" class="tpl-form-input"    placeholder="请输入管理员名" name="username">
+        </div>
+        <div class="am-form-group">
+          <input type="password" class="tpl-form-input"   placeholder="请输入密码" name="password">
+        </div>
+        <br>
+        <div class="am-form-group">
+          <button type="submit" class="am-btn am-btn-primary  am-btn-block tpl-btn-bg-color-success  tpl-login-btn" onclick="login()">登录</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+<script>
+  const form = document.querySelector('form');
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();  //需要组织表单的默认提交
+    // 在这里添加处理表单提交的代码
+    let data={
+      'username':form['username'].value,
+      'password':form['password'].value
+    }
+    $.ajax({
+      url: '/admin/login',
+      type: 'POST',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      success: function (response) {
+        if (response.code === 0) {
+          window.location = 'index.html';
+          localStorage.clear();
+          localStorage.setItem('username',response.data)
+        }
+        else
+        alert(response.msg);
+      }
+    });
+  });
+</script>
+</html>
+
+
+

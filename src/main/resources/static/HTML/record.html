@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>layuiAdmin</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div style="margin: 10px 10px 10px 10px" id="btn">
+        <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="width:80px">用户名</label>
+                    <div class="layui-input-inline">
+                        <!--注意此处input标签里的id-->
+                        <input class="layui-input" name="username" id="typeId" autocomplete="off">
+                    </div>
+                    <label class="layui-form-label">编号</label>
+                    <div class="layui-input-inline">
+                        <!--注意此处input标签里的id-->
+                        <input class="layui-input" name="number" id="cardId" autocomplete="off">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <!--注意此处button标签里的type属性-->
+                    <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon layui-icon-refresh"></i> 重 置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+<table id="demo" lay-filter="test"></table>
+</body>
+</html>
+<!--顶部操作栏-->
+
+
+
+<!--每条数据的操作栏-->
+<script type="text/html" id="barDemo">
+
+<!--   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+
+
+</script>
+
+<script src="../js/jquery-3.1.0.min.js"></script>
+<script src="../layui/layui.js"></script>
+<script src="../js/common.js"></script>
+
+<!--表格的数据源接口  向后端发送请求-->
+<script>
+    var xhr = new XMLHttpRequest();
+    xhr.open("get","/record/recordFind");
+    xhr.send();
+</script>
+<script>
+    layuiModules=['table', 'layer','form'];
+
+    function mounted(){  //生命周期
+        //第一个实例  创建表格
+        table.render({   //渲染 表格
+            elem: '#demo'
+            , toolbar: '#toolbarDemo'
+            , height: 550
+            , defaultToolbar: []
+            , url: '/record/recordFind' //数据接口
+            , page: true //开启分页
+            //, skin: 'line'// 设置表格样式
+            , limits: [3, 5, 10]  //一页选择显示3,5或10条数据
+            , limit: 10  //一页显示10条数据
+            , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据，res为从url中get到的数据
+                var result;
+                console.log(this);
+                console.log(JSON.stringify(res));
+                if (this.page.curr) {
+                    result = res.data.slice(this.limit * (this.page.curr - 1), this.limit * this.page.curr);
+                } else {
+                    result = res.data.slice(0, this.limit);
+                }
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": result //解析数据列表
+                };
+            }  //以上是页面自动分页的代码 就写成这样就行了
+
+            , cols: [[ //表头
+                {checkbox: true, LAY_CHECKED: false}
+                , {field: 'id', title: 'id', width: 120, sort: true}
+                , {field: 'number', title: '自行车编号', width: 120,}
+                , {field: 'username', title: '用户名', width: 120}
+                , {field: 'start', title: '开始时间', width: 200,sort:true}
+                , {field: 'end', title: '结束时间 ', width: 200, sort: true}
+                , {field: 'repair', title: '故障次数 ', width: 200, sort: true}
+                , {field: 'cost', title: '合计费用', width: 120}
+                , {fixed: 'right', width: 200, align: 'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
+            ]]
+        });
+
+        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+            if (layEvent === 'detail') { //查看
+                //do somehing
+            } else if (layEvent === 'del') { //删除
+                var dataMany = [];
+                dataMany[0] = data;
+                layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        url: '/record/recordDelete',
+                        data: JSON.stringify(dataMany),
+                        method: 'delete',
+                        contentType: 'application/json',
+                        success: function () {
+                            obj.del();
+                            layer.close(index);
+                        }
+                    });
+                });
+            }
+        });
+        //查询所用
+        form.on('submit(data-search-btn)', function (data) {
+            var reloadParams = {
+                page: {
+                    curr: 1
+                },
+                where: {
+                    // 将 data.field 中的属性添加到 where 对象中
+                    // 例如：title: data.field.title
+                    //这样他会和一开始的数据做比对  如果是模糊查询 就需要用到ajax传值 但是传回来的数据需要重新渲染，意思是上面的表格流程都要在走一遍，什么表头分页都需要。
+                     username:data.field.username,
+                     number:data.field.number
+                }
+            };
+            var index=layer.msg('查询中', {icon: 16, shade: 0.3, time: 0});
+            setTimeout(function () {  //延时直接关闭上面的icon
+            table.reload('demo', reloadParams)
+                layer.close(index);
+            },800)
+            return false;  //防止页面无提交刷新
+        });
+    }
+</script>
